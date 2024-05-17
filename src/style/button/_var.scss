@@ -1,0 +1,67 @@
+:root {
+  --le-button-disabled-color: #aaa;
+  --le-button-disabled-background-color: #f5f5f5;
+  --le-button-disabled-border-color: #ddd;
+
+  // 默认
+  --le-button-default-color: #666;
+  --le-button-default-background-color: #fff;
+  --le-button-default-border-color: #ddd;
+  --le-button-default-hover-color: var(--le-color-6c);
+  --le-button-default-hover-background-color: var(--le-color-1c);
+  --le-button-default-hover-border-color: var(--le-color-4c);
+
+  // 主
+  --le-button-primary-color: #fff;
+  --le-button-primary-background-color: var(--le-color-6c);
+  --le-button-primary-border-color: var(--le-color-6c);
+  --le-button-primary-hover-color: #fff;
+  --le-button-primary-hover-background-color: var(--le-color-5c);
+  --le-button-primary-hover-border-color: var(--le-color-5c);
+  --le-button-primary-plain-color: var(--le-color-6c);
+  --le-button-primary-plain-background-color: #fff;
+  --le-button-primary-plain-border-color: var(--le-color-4c);
+  --le-button-primary-plain-hover-background-color: var(--le-color-1c);
+  --le-button-primary-plain-hover-border-color: var(--le-color-5c);
+
+  //text
+  --le-button-text-color: var(--le-color-6c);
+  --le-button-text-hover-color: var(--le-color-5c);
+  --le-button-text-bg-color: var(--le-color-6c);
+  --le-button-text-bg-border-color: var(--le-color-6c);
+  --le-button-text-bg-hover-color: #fff;
+  --le-button-text-bg-hover-background-color: var(--le-color-5c);
+  --le-button-text-bg-hover-border-color: var(--le-color-5c);
+  --le-button-text-bg-danger-color: var(--le-color-6c);
+
+  --le-button-text-bg-danger-hover-color: #fff;
+  --le-button-text-bg-danger-hover-background-color: #f12933;
+  --le-button-text-bg-danger-hover-border-color: #f12933;
+
+  //不同尺寸
+  --le-button-large-danger-color: var(--le-color-6c);
+  --le-button-large-danger-border-color: #c3e5fd;
+  --le-button-large-danger-hover-color: #f12933;
+
+  //padding
+  --le-button-padding-vertical: calc(var(--le-spacing-1) * 3);
+  --le-button-padding-horizontal: var(--le-spacing-3);
+  // --le-button-medium-padding: 10px 20px;
+  --le-button-small-padding-vertical: var(--le-spacing-1);
+  --le-button-small-padding-horizontal: var(--le-spacing-3);
+  --le-button-text-bg-padding: var(--le-spacing-1);
+  --le-button-text-bg-danger-padding: var(--le-spacing-1);
+  --le-button-primary-noneBg-padding: var(--le-spacing-2);
+  --le-button-primary-small-padding-vertical: var(--le-spacing-1);
+  --le-button-primary-small-padding-horizontal: var(--le-spacing-2);
+  --le-button-large-padding-vertical: var(--le-spacing-3);
+  --le-button-large-padding-horizontal: var(--le-spacing-5);
+
+  //字体大小
+  --le-button-font: var(--le-font-2);
+  --le-button-icon-font: var(--le-font-2);
+  --le-button-large-font: var(--le-font-3);
+  --le-button-medium-font: var(--le-font-2);
+  --le-button-small-font: var(--le-font-2);
+  --le-button-small-i-font: var(--le-font-2);
+}

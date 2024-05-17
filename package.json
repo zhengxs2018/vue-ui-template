@@ -1,0 +1,36 @@
+{
+  "name": "lemon-ui",
+  "version": "1.0.0",
+  "author": "zhengxs2018",
+  "license": "MIT",
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "scripts": {
+    "build": "vite build",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "packageManager": "pnpm@9.1.1",
+  "peerDependencies": {
+    "vue": ">=3.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vueuse/core": "^10.9.0",
+    "fast-glob": "^3.3.2",
+    "markdown-it-container": "^4.0.0",
+    "sass": "^1.77.2",
+    "vite": "^5.2.11",
+    "vite-plugin-dts": "^3.9.1",
+    "vite-plugin-externalize-deps": "^0.8.0",
+    "vitepress": "^1.1.4",
+    "vue": "^3.4.27"
+  }
+}

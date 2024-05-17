@@ -1,0 +1,168 @@
+@use "sass:map";
+@use "sass:meta";
+
+@use "./util";
+
+// Default sass-bem configuration settings.
+//
+// @type map
+//
+// @prop {boolean} debug [false] - Turn debug mode on/off. To get outlines on selectors.
+//
+// @prop {string} separator.element [__] - Element separator from parent block.
+//
+// @prop {string} separator.modifier [--] - Modifier separator from parent block.
+//
+// @prop {string} separator.state [-] - States separator from parent block.
+//
+// @prop {string} namespace.component [c] - Component selector namespace.
+//
+// @prop {string} namespace.hack [_] - Hack selector namespace.
+//
+// @prop {string} namespace.object [o] - Object selector namespace.
+//
+// @prop {string} namespace.scope [s] - Scope selector namespace.
+//
+// @prop {string} namespace.test [qa] - Test selector namespace.
+//
+// @prop {string} namespace.theme [t] - Theme selector namespace.
+//
+// @prop {string} namespace.utility [u] - Utility selector namespace.
+//
+// @prop {list} shortcodes - Shortcodes list for parsing.
+//
+// @access public
+
+$bem-config: (
+  "debug": false,
+  "separator": (
+    "element": "__",
+    "modifier": "--",
+    "state": "-",
+  ),
+  "namespace": (
+    "component": "le",
+    "hack": "_",
+    "object": "o",
+    "scope": "s",
+    "test": "qa",
+    "theme": "t",
+    "utility": "u",
+  ),
+  "shortcodes": (
+    "ab": (
+      "before",
+      "after",
+    ),
+  ),
+) !default;
+
+/// Get configuration value using dot notated key.
+///
+/// @access public
+///
+/// @param {String} $key - Dot notated key that will be used to search value in config storage
+///
+/// @returns {mixed} - Value of stored configuration
+///
+/// @example scss - Usage
+///     .c-button {
+///         color: get-config('color.primary');
+///     }
+///
+///     .c-button {
+///         padding: get-config('spacing.inner.large');
+///     }
+///
+/// @example css - Output
+///     .c-button {
+///         color: black;
+///     }
+///
+///     .c-button {
+///         padding: 2em;
+///     }
+
+@function get-config($key) {
+  $value: $bem-config;
+
+  @each $name in util.explode($key, ".") {
+    @if meta.type-of($value) == "map" {
+      $value: map.get($value, $name);
+    }
+  }
+
+  @return $value;
+}
+
+// Turn debug mode on/off. To get outlines on selectors.
+//
+// @type Boolean
+
+$bem-debug: map.get($bem-config, "debug") !default;
+
+// Element separator from parent block.
+//
+// @type String
+
+$bem-element-separator: get-config("separator.element") !default;
+
+// Modifier separator from parent block.
+//
+// @type String
+
+$bem-modifier-separator: get-config("separator.modifier") !default;
+
+// States separator from parent block.
+//
+// @type String
+
+$bem-state-separator: get-config("separator.state") !default;
+
+// Component selector namespace.
+//
+// @type String
+
+$bem-component-namespace: get-config("namespace.component") !default;
+
+// Hack selector namespace.
+//
+// @type String
+
+$bem-hack-namespace: get-config("namespace.hack") !default;
+
+// Object selector namespace.
+//
+// @type String
+
+$bem-object-namespace: get-config("namespace.object") !default;
+
+// Scope selector namespace.
+//
+// @type String
+
+$bem-scope-namespace: get-config("namespace.scope") !default;
+
+// Test selector namespace.
+//
+// @type String
+
+$bem-test-namespace: get-config("namespace.test") !default;
+
+// Theme selector namespace.
+//
+// @type String
+
+$bem-theme-namespace: get-config("namespace.theme") !default;
+
+// Utility selector namespace.
+//
+// @type String
+
+$bem-utility-namespace: get-config("namespace.utility") !default;
+
+// Shortcodes list for parsing.
+//
+// @type List
+
+$bem-shortcodes: map.get($bem-config, "shortcodes") !default;

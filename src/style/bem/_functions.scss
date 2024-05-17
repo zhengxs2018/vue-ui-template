@@ -1,0 +1,226 @@
+@use 'sass:list';
+@use 'sass:string';
+@use 'sass:meta';
+
+@use './config' as *;
+@use './util';
+
+// Get index of separator.
+//
+// @access private
+//
+// @param {String} $string - Name of selector, where we should find separator
+//
+// @returns {Number} - Index of separators
+
+@function bem-index($string) {
+  $e_index: null;
+  $m_index: null;
+
+  @if (
+    string.index($string, string.unquote('#{$bem-element-separator}')) != null
+  ) {
+    $e_index: string.index(
+      $string,
+      string.unquote('#{$bem-element-separator}')
+    );
+  }
+
+  @if (
+    string.index($string, string.unquote('#{$bem-modifier-separator}')) != null
+  ) {
+    $m_index: string.index(
+      $string,
+      string.unquote('#{$bem-modifier-separator}')
+    );
+  }
+
+  @if (string.index($string, '.is') != null) {
+    $m_index: string.index($string, '.is');
+  }
+
+  @if (string.index($string, '.js') != null) {
+    $m_index: string.index($string, '.js');
+  }
+
+  @if (string.index($string, '.has') != null) {
+    $m_index: string.index($string, '.has');
+  }
+
+  @if (string.index($string, ':') != null) {
+    $m_index: string.index($string, ':');
+  }
+
+  @return util.math-min($e_index, $m_index, 0);
+}
+
+// Get block element from selector.
+//
+// @access private
+//
+// @param {String} $selector - Selector, from where we will take block
+//
+// @returns {String} - Block element
+
+@function get-block($selector) {
+  $block: string.slice($selector, 2, bem-index($selector) - 1);
+
+  @while (is-block($block) == false) {
+    $block: string.slice($block, 0, bem-index($block) - 1);
+  }
+
+  @return $block;
+}
+
+// Check if selector contains pseudo element.
+//
+// @access private
+//
+// @param {String} $selector - Selector, which we will check for pseudo
+//
+// @returns {Boolean}
+
+@function has-pseudo($selector) {
+  @return string.index($selector, ':') != null;
+}
+
+// Check if selector contains state.
+//
+// @access private
+//
+// @param {String} $selector - Selector, which we will check for state
+//
+// @returns {Boolean}
+
+@function has-state($selector) {
+  $separator_is: string.unquote('.is#{$bem-state-separator}');
+  $separator_js: string.unquote('.js#{$bem-state-separator}');
+  $separator_has: string.unquote('.has#{$bem-state-separator}');
+
+  @return string.index($selector, $separator_is) != null or
+    string.index($selector, $separator_js) != null or
+    string.index($selector, $separator_has) != null;
+}
+
+// Check if selector is modifier.
+//
+// @access private
+//
+// @param {String} $selector - Selector, which we will check for modifier
+//
+// @returns {Boolean}
+
+@function is-modifier($selector) {
+  $separator: string.unquote('#{$bem-modifier-separator}');
+
+  @return string.index($selector, $separator) != null;
+}
+
+// Check if selector is element.
+//
+// @access private
+//
+// @param {String} $selector - Selector, which we will check for element
+//
+// @returns {Boolean}
+
+@function is-element($selector) {
+  $separator: string.unquote('#{$bem-element-separator}');
+
+  @return string.index($selector, $separator) != null;
+}
+
+// Check if selector is block.
+//
+// @access private
+//
+// @param {String} $selector - Selector, which we will check for block
+//
+// @returns {Boolean}
+
+@function is-block($selector) {
+  @return not is-element($selector) and not is-modifier($selector) and not
+    has-state($selector) and not has-pseudo($selector);
+}
+
+// Selector(s) of at relationship.
+//
+// @param {String} $modifier - List of modifier that will come after ".[block]--"
+//
+// @returns {String} - .[block]--[modifier]
+//
+// @see {mixin} at
+
+@function at-selector($modifiers...) {
+  $block: get-block(string.unquote('#{&}'));
+  $classes: ();
+
+  @each $modifier in $modifiers {
+    $classes: list.append(
+      $classes,
+      string.unquote('.#{$block}#{$bem-modifier-separator}#{$modifier}')
+    );
+  }
+
+  @return string.unquote('#{util.implode($classes)} &');
+}
+
+// Selector of adjacent relationship.
+//
+// @param {String} $element - Name of element that will come after ".[block]__"
+//
+// @returns {String} - & + .[block]__[element]
+//
+// @see {mixin} next
+
+@function next-selector($element) {
+  $block: get-block(string.unquote('#{&}'));
+
+  @return string.unquote('& + .#{$block}#{$bem-element-separator}#{$element}');
+}
+
+// Selector of duo relationship.
+//
+// @returns {String} - & + &
+//
+// @see {mixin} duo
+
+@function duo-selector($debug: false) {
+  $list: explode(string.unquote('#{&}'), ' ');
+
+  @if ($debug == true and list.length($list) == 0) {
+    $list: ('&');
+  }
+
+  $last: list.nth($list, list.length($list));
+
+  @return string.unquote('& + #{$last}');
+}
+
+// Selector of sibling relationship.
+//
+// @param {String} $element - Name of element that will come after ".[block]__"
+//
+// @returns {String} - & ~ .[block]__[element]
+//
+// @see {mixin} with
+
+@function with-selector($element) {
+  $block: get-block(string.unquote('#{&}'));
+
+  @return string.unquote('& ~ .#{$block}#{$bem-element-separator}#{$element}');
+}
+
+// Selector(s) of while relationship.
+//
+// @param {String} $modifier - List of modifiers that will come after ".[block]--"
+//
+// @returns {String} - .[block]--[modifier]
+//
+// @see {mixin} while
+
+@function while-selector($modifier) {
+  $block: get-block(string.unquote('#{&}'));
+
+  @return string.unquote('&.#{$block}#{$bem-modifier-separator}#{$modifier}');
+}

@@ -1,0 +1,196 @@
+@use "../bem/bem" as *;
+
+@use "./var";
+@use "./mixins" as *;
+
+@include component("button") {
+  display: inline-block;
+  margin: 0;
+  padding: var(--le-button-padding-vertical) var(--le-button-padding-horizontal);
+  line-height: 16px;
+  transition: 0.1s;
+  cursor: pointer;
+  box-sizing: border-box;
+
+  font-size: var(--le-button-font);
+  text-align: center;
+  white-space: nowrap;
+
+  color: var(--le-button-default-color);
+  background: var(--le-button-default-background-color);
+
+  outline: none;
+  border: 1px solid;
+  border-color: var(--le-button-default-border-color);
+  border-radius: 4px;
+
+  -webkit-appearance: none;
+  // 禁止选中按钮文字
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+
+  &:focus,
+  &:hover {
+    color: var(--le-button-default-hover-color);
+    border-color: var(--le-button-default-hover-border-color);
+    background-color: var(--le-button-default-hover-background-color);
+  }
+
+  // ======================================================
+  //                         类型
+  // ======================================================
+
+  // 默认按钮
+  @include modifier("default") {
+    &:not(.is-disabled) i {
+      color: #666;
+    }
+  }
+
+  // 重要按钮
+  @include modifier("primary") {
+    color: var(--le-button-primary-color);
+    background-color: var(--le-button-primary-background-color);
+    border-color: var(--le-button-primary-border-color);
+
+    &:focus,
+    &:hover {
+      color: var(--le-button-primary-hover-color);
+      background-color: var(--le-button-primary-hover-background-color);
+      border-color: var(--le-button-primary-hover-border-color);
+    }
+  }
+
+  // 重要按钮
+  @include modifier("warning") {
+    color: var(--le-button-warning-color);
+    background-color: var(--le-button-warning-background-color);
+    border-color: var(--le-button-warning-border-color);
+
+    &:focus,
+    &:hover {
+      color: var(--le-button-warning-hover-color);
+      background-color: var(--le-button-warning-hover-background-color);
+      border-color: var(--le-button-warning-hover-border-color);
+    }
+  }
+
+  // ======================================================
+  //                         变种
+  // ======================================================
+
+  // 文字按钮
+  @include modifier("text") {
+    padding-right: 0;
+    padding-left: 0;
+    background: transparent;
+    border-color: transparent;
+    color: var(--le-button-text-color);
+
+    &:focus,
+    &:hover {
+      color: var(--le-button-text-hover-color);
+      background-color: transparent;
+      border-color: transparent;
+    }
+  }
+
+  // 朴素按钮
+  @include modifier("plain") {
+    // 组合样式：重要按钮 + 朴素按钮
+    @include while("primary") {
+      color: var(--le-button-primary-plain-color);
+      background: var(--le-button-primary-plain-background-color);
+      border-color: var(--le-button-primary-plain-border-color);
+
+      @include hover {
+        background: var(--le-button-primary-plain-hover-background-color);
+        border-color: var(--le-button-primary-plain-hover-border-color);
+      }
+    }
+
+    // 组合样式：警告按钮 + 朴素按钮
+    @include while("warning") {
+      color: var(--le-button-warning-plain-color);
+      background: var(--le-button-warning-plain-background-color);
+      border-color: var(--le-button-warning-plain-border-color);
+
+      @include hover {
+        background: var(--le-button-warning-plain-hover-background-color);
+        border-color: var(--le-button-warning-plain-hover-border-color);
+      }
+    }
+  }
+
+  // ======================================================
+  //                         尺寸
+  // ======================================================
+
+  // 大按钮
+  @include modifier("large") {
+    min-width: 96px;
+    padding: var(--le-button-large-padding);
+    font-size: var(--le-button-large-font);
+    border-radius: 4px;
+  }
+
+  // 中等按钮
+  @include modifier("medium") {
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: var(--le-button-medium-font);
+  }
+
+  // 小按钮
+  @include modifier("small") {
+    padding: var(--le-button-small-padding);
+    font-size: var(--le-button-small-font);
+    border-radius: 4px;
+
+    @include component("icon") {
+      font-size: var(--le-button-small-i-font);
+    }
+  }
+
+  // ======================================================
+  //                         圆角
+  // ======================================================
+
+  // 圆角
+  @include modifier("round") {
+    border-radius: 20px;
+  }
+
+  // 圆形
+  @include modifier("circle") {
+    width: 24px;
+    max-width: 24px;
+    height: 24px;
+    max-height: 24px;
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  // ======================================================
+  //                         状态
+  // ======================================================
+
+  // 禁用
+  @include is("disabled") {
+    cursor: not-allowed;
+    @include button-disable-style;
+
+    // 文字按钮
+    @include while("text") {
+      &,
+      &:focus,
+      &:hover,
+      &:active {
+        color: var(--le-button-disabled-color);
+        border-color: transparent;
+        background-color: transparent;
+      }
+    }
+  }
+}

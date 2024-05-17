@@ -1,0 +1,30 @@
+version: "0.2"
+ignorePaths:
+  - archive
+  - dist
+  - node_modules
+dictionaries:
+  - en_US
+  - softwareTerms
+  - bash
+  - node
+  - npm
+  - html
+  - css
+  - typescript
+  - filetypes
+words:
+  - codepen
+  - composables
+  - consola
+  - frontmatter
+  - iconify
+  - prismjs
+  - quickstart
+  - toastification
+  - unocss
+  - unplugin
+  - vitepress
+  - vueuse
+ignoreWords:
+  - zhengxs

@@ -1,0 +1,792 @@
+@use "sass:selector";
+
+@use "./config" as *;
+@use "./functions" as *;
+@use "./selector" as *;
+
+// Signify that a class is responsible for adding a Theme to a view. It lets us know that UI Components’ current cosmetic appearance may be due to the presence of a theme.
+//
+// @param {String} $theme - Name of theme that will come after ".t-"
+// @param {String} $namespace [null] - Theme element namespace.
+//
+// @example scss - Usage
+//     @include theme('dark') {
+//         color: black;
+//     }
+//
+//     @include t('dark') {
+//         color: black;
+//     }
+//
+// @example css - Output
+//     .t-dark {
+//         color: black;
+//     }
+//
+//     .t-dark {
+//         color: black;
+//     }
+
+@mixin theme($theme, $namespace: $bem-theme-namespace) {
+  #{theme-selector($theme, $namespace)} {
+    @if $bem-debug == true {
+      outline: 5px solid #60316e;
+    }
+
+    @content;
+  }
+}
+
+// @alias theme
+
+@mixin t($theme, $namespace: $bem-theme-namespace) {
+  @include theme($theme, $namespace) {
+    @content;
+  }
+}
+
+// Signify that something is a Component. This is a concrete, implementation-specific piece of UI. All of the changes you make to its styles should be detectable in the context you’re currently looking at. Modifying these styles should be safe and have no side effects.
+//
+// @param {String} $component - Name of component that will come after ".c-"
+// @param {String} $namespace [null] - Component element namespace.
+//
+// @example scss - Usage
+//     @include component('list') {
+//         color: black;
+//     }
+//
+//      @include c('list') {
+//         color: black;
+//     }
+//
+// @example css - Output
+//     .c-list {
+//         color: black;
+//      }
+//
+//     .c-list {
+//         color: black;
+//     }
+
+@mixin component($component, $namespace: $bem-component-namespace) {
+  #{component-selector($component, $namespace)} {
+    @if $bem-debug == true {
+      outline: 5px solid #00b8a9;
+    }
+
+    @content;
+  }
+}
+
+// @alias component
+
+@mixin c($component, $namespace: $bem-component-namespace) {
+  @include component($component, $namespace) {
+    @content;
+  }
+}
+
+// Block selector that will be parent of some elements, modifiers, states...
+//
+// @param {String} $block - Name of block that will come after "."
+//
+// @example scss - Usage
+//     @include block('list') {
+//         color: black;
+//     }
+//
+//     @include b('list') {
+//         color: black;
+//     }
+//
+// @example css - Output
+//     .list {
+//         color: black;
+//     }
+//
+//     .list {
+//         color: black;
+//     }
+
+@mixin block($block) {
+  #{block-selector($block)} {
+    @if $bem-debug == true {
+      outline: 5px solid #363863;
+    }
+
+    @content;
+  }
+}
+
+// @alias block
+
+@mixin b($block) {
+  @include block($block) {
+    @content;
+  }
+}
+
+// Signify that something is a Component. This is a concrete, implementation-specific piece of UI. All of the changes you make to its styles should be detectable in the context you’re currently looking at. Modifying these styles should be safe and have no side effects.
+//
+// @param {String} $component - Name of component that will come after ".c-"
+// @param {String} $namespace [null] - Component element namespace.
+//
+// @example scss - Usage
+//     @include component('list') {
+//         color: black;
+//     }
+//
+//      @include c('list') {
+//         color: black;
+//     }
+//
+// @example css - Output
+//     .c-list {
+//         color: black;
+//      }
+//
+//     .c-list {
+//         color: black;
+//     }
+
+@mixin component($component, $namespace: $bem-component-namespace) {
+  #{component-selector($component, $namespace)} {
+    @if $bem-debug == true {
+      outline: 5px solid #00b8a9;
+    }
+
+    @content;
+  }
+}
+
+// @alias component
+
+@mixin c($component, $namespace: $bem-component-namespace) {
+  @include component($component, $namespace) {
+    @content;
+  }
+}
+
+// Element selector, that is generated from parent block
+//
+// @param {String} $element - Name of element that will come after ".[block]__"
+// @param {Boolean} $nested [false] - If element is nested with other element
+//
+// @example scss - Usage
+//     @include block('list') {
+//         @include element('item') {
+//             color: black;
+//         }
+//     }
+//
+//     @include b('list') {
+//         @include e('item') {
+//             color: black;
+//         }
+//     }
+//
+//     @include b('list') {
+//         @include e('item') {
+//             @include ee('link') {
+//                 color: black;
+//             }
+//         }
+//     }
+//
+//     @include b('list') {
+//         @include e(('item', 'link')) {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list__item {
+//         color: black;
+//     }
+//
+//     .list__item {
+//         color: black;
+//     }
+//
+//     .list__item__link {
+//         color: black;
+//     }
+//
+//     .list__item, .list__link {
+//         color: black;
+//     }
+
+@mixin element($element, $nested: false) {
+  @at-root #{element-selector($element, $nested)} {
+    @if $bem-debug == true {
+      outline: 5px solid #635270;
+    }
+
+    @content;
+  }
+}
+
+// @alias element
+
+@mixin e($element, $nested: false) {
+  @include element($element, $nested) {
+    @content;
+  }
+}
+
+// @alias element
+
+@mixin ee($element) {
+  @include element($element, true) {
+    @content;
+  }
+}
+
+// Modifier selector, that is generated from parent block.
+//
+// @param {String} $modifier - Name of modifier that will come after ".[block]--"
+//
+// @example scss - Usage
+//     @include block('list') {
+//         @include modifier('inline') {
+//             color: black;
+//         }
+//     }
+//
+//     @include b('list') {
+//         @include m('inline') {
+//             color: black;
+//         }
+//     }
+//
+//     @include b('list') {
+//         @include m(('inline', 'ordered')) {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list--inline {
+//         color: black;
+//     }
+//
+//     .list--inline {
+//         color: black;
+//     }
+//
+//     .list--inline, .list--ordered {
+//         color: black;
+//     }
+
+@mixin modifier($modifier) {
+  @at-root {
+    #{modifier-selector($modifier)} {
+      @if $bem-debug == true {
+        outline: 5px solid #c98b70;
+      }
+
+      @content;
+    }
+  }
+}
+
+// @alias modifier
+
+@mixin m($modifier) {
+  @include modifier($modifier) {
+    @content;
+  }
+}
+
+// Pseudo selector with end of first-of-type.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include first {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list:first-of-type {
+//         color: black;
+//     }
+
+@mixin first {
+  &:first-of-type {
+    @content;
+  }
+}
+
+// Pseudo selector with end of last-of-type.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include last {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list:last-of-type {
+//         color: black;
+//     }
+
+@mixin last {
+  &:last-of-type {
+    @content;
+  }
+}
+
+// Pseudo selector with end of nth-child(even).
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include even {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list:nth-child(even) {
+//         color: black;
+//     }
+
+@mixin even {
+  &:nth-child(even) {
+    @content;
+  }
+}
+
+// Pseudo selector with end of nth-child(odd).
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include odd {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list:nth-child(odd) {
+//         color: black;
+//     }
+
+@mixin odd {
+  &:nth-child(odd) {
+    @content;
+  }
+}
+
+// Pseudo selector with end of before.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include before {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list:before {
+//         color: black;
+//     }
+
+@mixin before {
+  &::before {
+    @content;
+  }
+}
+
+// Pseudo selector with end of after.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include after {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list:after {
+//         color: black;
+//     }
+
+@mixin after {
+  &::after {
+    @content;
+  }
+}
+
+// Relationship of parent element with current modifiers.
+//
+// @param {String} $modifiers - List of modifiers that will make parent element child.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include e('item') {
+//             @include at('inline') {
+//                 color: black;
+//             }
+//         }
+//     }
+//
+//     @include b('list') {
+//         @include e('item') {
+//             @include at('inline', 'inverse') {
+//                 color: black;
+//             }
+//         }
+//     }
+//
+// @example css - Output
+//     .list--inline .list__item {
+//         color: black;
+//     }
+//
+//     .list--inline.list--inverse .list__item {
+//         color: black;
+//     }
+
+@mixin at($modifiers...) {
+  #{at-selector($modifiers...)} {
+    @content;
+  }
+}
+
+// Element with next element separated by plus sign.
+//
+// @param {String} $element - Name of element that will be styled with parent element.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include e('item') {
+//             @include next('title') {
+//                 color: black;
+//             }
+//         }
+//     }
+//
+// @example css - Output
+//     .list__item + .list__title {
+//         color: black;
+//     }
+
+@mixin next($element) {
+  #{next-selector($element)} {
+    @content;
+  }
+}
+
+// Element with same element separated by plus sign.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include e('item') {
+//             @include duo {
+//                 color: black;
+//             }
+//         }
+//     }
+//
+// @example css - Output
+//     .list__item + .list__item {
+//         color: black;
+//     }
+
+@mixin duo {
+  #{duo-selector()} {
+    @content;
+  }
+}
+
+// Element with sibling elements separated by equivalency sign.
+//
+// @param {String} $element - Name of element that will be styled with parent element.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include e('item') {
+//             @include with('title') {
+//                 color: black;
+//             }
+//         }
+//     }
+//
+// @example css - Output
+//     .list__item ~ .list__title {
+//         color: black;
+//     }
+
+@mixin with($element) {
+  #{with-selector($element)} {
+    @content;
+  }
+}
+
+// While two selectors are on same modifier.
+//
+// @param {String} $modifier - Name modifier that will follow parent modifier.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include m('inline') {
+//             @include while('ordered') {
+//                 color: black;
+//             }
+//         }
+//     }
+//
+// @example css - Output
+//     .list--inline.list--ordered {
+//         color: black;
+//     }
+
+@mixin while($modifier) {
+  #{while-selector($modifier)} {
+    @content;
+  }
+}
+
+// Signify that the piece of UI in question is currently styled a certain way because of a state or condition. This stateful namespace is gorgeous, and comes from SMACSS. It tells us that the DOM currently has a temporary, optional, or short-lived style applied to it due to a certain state being invoked.
+//
+// @param {String} $state - Name of state that will come after ".[is|has|js]-"
+// @param {String} $namespace [null] - State element namespace.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include state('active', 'is') {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list.is-active {
+//         color: black;
+//     }
+
+@mixin state($state, $namespace: null) {
+  @at-root {
+    #{state-selector($state, $namespace)} {
+      @if $bem-debug == true {
+        outline: 5px solid #66a96b;
+      }
+
+      @content;
+    }
+  }
+}
+
+// @alias state
+
+@mixin is($state) {
+  @include state($state, "is") {
+    @content;
+  }
+}
+
+// @alias state
+
+@mixin has($state) {
+  @include state($state, "has") {
+    @content;
+  }
+}
+
+// Signify that this piece of the DOM has some behaviour acting upon it, and that JavaScript binds onto it to provide that behaviour. If you’re not a developer working with JavaScript, leave these well alone.
+//
+// @alias state
+
+@mixin js($state) {
+  @include state($state, "js") {
+    @content;
+  }
+}
+
+// Pseudo selector with end of hover.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include hover {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list:hover {
+//         color: black;
+//     }
+
+@mixin hover {
+  &:hover {
+    @content;
+  }
+}
+
+// Pseudo selector with end of focus.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include focus {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list:focus {
+//         color: black;
+//     }
+
+@mixin focus {
+  &:focus {
+    @content;
+  }
+}
+
+// Pseudo selector with end of active.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include active {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list:active {
+//         color: black;
+//     }
+
+@mixin active {
+  &:active {
+    @content;
+  }
+}
+
+// Pseudo selector with end of link.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include link {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list:link {
+//         color: black;
+//     }
+
+@mixin link {
+  &:link {
+    @content;
+  }
+}
+
+// Pseudo selector with end of visited.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include visited {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list:visited {
+//         color: black;
+//     }
+
+@mixin visited {
+  &:visited {
+    @content;
+  }
+}
+
+// Pseudo selector with end of checked.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include checked {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list:checked {
+//         color: black;
+//     }
+
+@mixin checked {
+  &:checked {
+    @content;
+  }
+}
+
+// Selector with state of disabled.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include disabled {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list[disabled] {
+//         color: black;
+//     }
+
+@mixin disabled {
+  &[disabled] {
+    @content;
+  }
+}
+
+// Selector with state of readonly.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include readonly {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list[readonly] {
+//         color: black;
+//     }
+
+@mixin readonly {
+  &[readonly] {
+    @content;
+  }
+}
+
+// Selector with state of contenteditable.
+//
+// @example scss - Usage
+//     @include b('list') {
+//         @include contenteditable {
+//             color: black;
+//         }
+//     }
+//
+// @example css - Output
+//     .list[contenteditable="true"] {
+//         color: black;
+//     }
+
+@mixin contenteditable {
+  &[contenteditable="true"] {
+    @content;
+  }
+}
+
+// @alias contenteditable
+
+@mixin editable {
+  @include contenteditable {
+    @content;
+  }
+}

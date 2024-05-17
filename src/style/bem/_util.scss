@@ -1,0 +1,94 @@
+@use "sass:list";
+@use "sass:string";
+@use "sass:meta";
+
+// Explode string to get list of strings.
+//
+// @access private
+//
+// @param {String} $string - String which should be exploded
+// @param {String} $separator - Separator which will explode string to pieces
+//
+// @returns {List} - List of exploded string
+
+@function explode($string, $separator) {
+  $list: ();
+  $length: string.length($string);
+
+  @for $i from 1 through $length {
+    $index: string.index($string, $separator);
+
+    @if string.length($string) >= 1 and $index == null {
+      $list: list.append($list, $string);
+      $string: "";
+    }
+
+    @if meta.type-of($index) == number {
+      $each: string.slice($string, 0, ($index - 1));
+      $list: list.append($list, $each);
+      $string: string.slice($string, ($index + 1), $length);
+    }
+  }
+
+  @return $list;
+}
+
+// Implode list to get string.
+//
+// @access private
+//
+// @param {List} $list - List which will be imploded
+// @param {String} $glue [''] - Separator which will glue list
+// @param {Boolean} $is-nested - List is nested or not
+//
+// @returns {String} - Imploded list
+
+@function implode($list, $glue: "", $is-nested: false) {
+  $result: null;
+
+  @for $i from 1 through list.length($list) {
+    $e: list.nth($list, $i);
+
+    @if meta.type-of($e) == list {
+      $result: string.unquote("#{$result}#{implode($e, $glue, true)}");
+    } @else {
+      $result: if(
+        $i != list.length($list) or $is-nested,
+        string.unquote("#{$result}#{$e}#{$glue}"),
+        string.unquote("#{$result}#{$e}")
+      );
+    }
+  }
+
+  @return $result;
+}
+
+// Get minimum number from two of them, or get default.
+//
+// @access private
+//
+// @param {String} $a - First number to be checked
+// @param {String} $n - Second number to be checked
+// @param {String} $default [0] - Default number to be returned if min wasn't found
+//
+// @returns {Number} - Minimum number from two of them
+
+@function math-min($a, $b, $default: 0) {
+  $min: $default;
+
+  @if ($a == null) {
+    @if ($b != null) {
+      $min: $b;
+    }
+  } @else if ($b == null) {
+    $min: $a;
+  } @else {
+    @if ($a <= $b) {
+      $min: $a;
+    } @else {
+      $min: $b;
+    }
+  }
+
+  @return $min;
+}

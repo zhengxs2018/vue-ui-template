@@ -1,0 +1,218 @@
+:root {
+  // ----------- 品牌色 ----------- //
+  --le-primary-color: #1e88e5;
+  --le-secondary-color: #29b6f6;
+
+  // ----------- 情境色 ----------- //
+  --le-success-color: #52c41a;
+  --le-warning-color: #ff9900;
+  --le-error-color: #f12933;
+
+  // ----------- 文字颜色 ----------- //
+  --le-text-primary-color: #333;
+  --le-text-secondary-color: #666;
+  --le-text-hint-color: #999;
+
+  // ----------- 背景色 ----------- //
+  --le-background-color: #f8f8f8;
+  --le-background-blue-color: #f0f5fb;
+
+  // ----------- 填充色 ----------- //
+  --le-fill-color: var(--le-background-blue-color);
+  --le-disabled-fill-color: var(--le-background-color);
+
+  // ----------- 组件 ----------- //
+  --le-select-hover: #c3e5fd;
+  --le-hover-color: #e2efff;
+
+  --le-border-color: #ddd;
+  --le-divider-color: #eee;
+
+  /// =====================
+  ///       颜色
+  /// =====================
+
+  /// 颜色-1
+  ///
+  /// @group a-color
+  /// @type Color
+  /// #e6f3ff;
+  --le-color-1: 230, 243, 255;
+  --le-color-1c: #e6f3ff;
+
+  /// 颜色-2
+  ///
+  /// @group a-color
+  /// @type Color
+  /// #b8ddff;
+  --le-color-2: 184, 221, 255;
+  --le-color-2c: #b8ddff;
+
+  /// 颜色-3
+  ///
+  /// @group a-color
+  /// @type Color
+  /// #8fc9ff;
+  --le-color-3: 143, 201, 255;
+  --le-color-3c: #8fc9ff;
+
+  /// 颜色-4
+  ///
+  /// @group a-color
+  /// @type Color
+  /// #66b5ff;
+  --le-color-4: 102, 181, 255;
+  --le-color-4c: #66b5ff;
+
+  /// 颜色-5
+  ///
+  /// @group a-color
+  /// @type Color
+  /// #3da0fc;
+  --le-color-5: 61, 160, 252;
+  --le-color-5c: #3da0fc;
+
+  /// 颜色-6
+  ///
+  /// @group a-color
+  /// @type Color
+  /// #1385f0;
+  --le-color-6: 19, 133, 240;
+  --le-color-6c: #1385f0;
+
+  /// 颜色-7
+  ///
+  /// @group a-color
+  /// @type Color
+  /// #0664c9;
+  --le-color-7: 6, 100, 201;
+  --le-color-7c: #0664c9;
+
+  /// 颜色-8
+  ///
+  /// @group a-color
+  /// @type Color
+  /// #0049a3;
+  --le-color-8: 0, 73, 163;
+  --le-color-8c: #0049a3;
+
+  /// 颜色-9
+  ///
+  /// @group a-color
+  /// @type Color
+  /// #00347d;
+  --le-color-9: 0, 52, 125;
+  --le-color-9c: #00347d;
+
+  /// 颜色-10
+  ///
+  /// @group a-color
+  /// @type Color
+  /// #002157;
+  --le-color-10: 0, 33, 87;
+  --le-color-10c: #002157;
+
+  /// =====================
+  ///       字号
+  /// =====================
+
+  /// 字号-1
+  ///
+  /// @group b-font
+  /// @type FontSize
+  --le-font-1: 12px;
+
+  /// 字号-2
+  ///
+  /// @group b-font
+  /// @type FontSize
+  --le-font-2: 14px;
+
+  /// 字号-3
+  ///
+  /// @group b-font
+  /// @type FontSize
+  --le-font-3: 16px;
+
+  /// 字号-4
+  ///
+  /// @group b-font
+  /// @type FontSize
+  --le-font-4: 18px;
+
+  /// 字号-5
+  ///
+  /// @group b-font
+  /// @type FontSize
+  --le-font-5: 20px;
+
+  /// 字号-6
+  ///
+  /// @group b-font
+  /// @type FontSize
+  --le-font-6: 22px;
+
+  /// 字号-7
+  ///
+  /// @group b-font
+  /// @type FontSize
+  --le-font-7: 24px;
+
+  /// =====================
+  ///       间距
+  /// =====================
+
+  /// 间距-1
+  ///
+  /// @group c-spacing
+  /// @type Size
+  --le-spacing-1: 2px;
+
+  /// 间距-2
+  ///
+  /// @group c-spacing
+  /// @type Size
+  --le-spacing-2: 4px;
+
+  /// 间距-3
+  ///
+  /// @group c-spacing
+  /// @type Size
+  --le-spacing-3: 8px;
+
+  /// 间距-4
+  ///
+  /// @group c-spacing
+  /// @type Size
+  --le-spacing-4: 12px;
+
+  /// 间距-5
+  ///
+  /// @group c-spacing
+  /// @type Size
+  --le-spacing-5: 16px;
+
+  /// 间距-6
+  ///
+  /// @group c-spacing
+  /// @type Size
+  --le-spacing-6: 20px;
+
+  /// 间距-7
+  ///
+  /// @group c-spacing
+  /// @type Size
+  --le-spacing-7: 24px;
+
+  /// 间距-8
+  ///
+  /// @group c-spacing
+  /// @type Size
+  --le-spacing-8: 28px;
+
+  /// 间距-9
+  ///
+  /// @group c-spacing
+  /// @type Size
+  --le-spacing-9: 32px;
+}
